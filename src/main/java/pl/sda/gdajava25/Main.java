@@ -1,13 +1,13 @@
 package pl.sda.gdajava25;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Aplikacja zamówienia");
-       Zamównienie zamównienie = new Zamównienie();
-
+        Magazyn magazyn = new Magazyn();
 
         String komenda;
         do {
@@ -25,6 +25,27 @@ public class Main {
 
                 switch (komenda) {
                     case "dodaj zamówienie":
+                        Random random = new Random();
+                        Zamównienie zamównienie = new Zamównienie();
+                        zamównienie.setDataZamowienia(LocalDateTime.now());
+                        List<Produkt> produktList = new ArrayList<>();
+                        System.out.println("Podaj ilość produktów na zamównieniu");
+                        int iloscProduktów = Integer.parseInt(scanner.nextLine());
+                        for (int i = 1; i >= iloscProduktów; i++) {
+                            Produkt produkt = new Produkt();
+                            produkt.setCzyDostarczony(false);
+                            System.out.println("Podaj nazwe produktu "+i);
+                            produkt.setNazwa(scanner.nextLine());
+                            System.out.println("Podaj cene produktu "+i);
+                            produkt.setCena(Double.parseDouble(scanner.nextLine()));
+                            System.out.println("Podaj ilość produktu "+i);
+                            produkt.setIlosc(Integer.parseInt(scanner.nextLine()));
+                            produktList.add(produkt);
+                            magazyn.dodajProdukt(produkt);
+                        }
+                        zamównienie.setProduktList(produktList);
+                        int numerZamowienia = magazyn.dodajZamowienie(zamównienie);
+                        System.out.println("Zamówienie złożone. Numer zamówienia : "+numerZamowienia);
 
                         break;
                     case "dodaj dostawę":

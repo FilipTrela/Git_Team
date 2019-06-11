@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Produkt {
     private String nazwa;
-    private int cena;
+    private double cena;
     private int ilosc;
     private boolean  czyDostarczony;
 
