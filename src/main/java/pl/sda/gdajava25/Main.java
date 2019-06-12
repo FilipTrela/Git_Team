@@ -1,13 +1,13 @@
 package pl.sda.gdajava25;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Aplikacja zamówienia");
         Magazyn magazyn = new Magazyn();
-
 
         String komenda;
         do {
@@ -21,18 +21,34 @@ public class Main {
             }
 
             try {
-
-
                 switch (komenda) {
                     case "dodaj zamówienie":
-
+                        Zamównienie zamównienie = new Zamównienie();
+                        List<Produkt> produktList = new ArrayList<>();
+                        System.out.println("Podaj ilość produktów na zamównieniu");
+                        int iloscProduktów = Integer.parseInt(scanner.nextLine());
+                        for (int i = 1; i >= iloscProduktów; i++) {
+                            Produkt produkt = new Produkt();
+                            produkt.setCzyDostarczony(false);
+                            System.out.println("Podaj nazwe produktu " + i);
+                            produkt.setNazwa(scanner.nextLine());
+                            System.out.println("Podaj cene produktu " + i);
+                            produkt.setCena(Double.parseDouble(scanner.nextLine()));
+                            System.out.println("Podaj ilość produktu " + i);
+                            produkt.setIlosc(Integer.parseInt(scanner.nextLine()));
+                            produktList.add(produkt);
+                        }
+                        zamównienie.setProduktList(produktList);
+                        zamównienie.setDataZamowienia(LocalDateTime.now());
+                        int numerZamowienia = magazyn.dodajZamowienie(zamównienie);
+                        System.out.println("Zamówienie złożone. Numer zamówienia : " + numerZamowienia);
                         break;
                     case "dodaj dostawę":
                         System.out.println("Podaj numer zamówienia: ");
-                        int numerZamowienia = scanner.nextInt();
-                        Zamównienie zamównienie=magazyn.getZamównienieMap().get(numerZamowienia);
-                        System.out.println("Zamówienie zawiera " +zamównienie.getProduktList().size()+" produkty");
-                        for (Produkt produkt: zamównienie.getProduktList()) {
+                        int numerZamowieniaDostawa = scanner.nextInt();
+                        Zamównienie zamównienieDostawa=magazyn.getZamównienieMap().get(numerZamowieniaDostawa);
+                        System.out.println("Zamówienie zawiera " +zamównienieDostawa.getProduktList().size()+" produkty");
+                        for (Produkt produkt: zamównienieDostawa.getProduktList()) {
                             System.out.println("Czy w dostawie znajduje się produkt: "+produkt.getNazwa()+", cena "
                             +produkt.getCena()+", ilość "+produkt.getIlosc());
                             String czyZawiera =scanner.nextLine().toLowerCase();
@@ -45,16 +61,19 @@ public class Main {
 
                         break;
                     case "listuj zamówienia":
+                        magazyn.listujZamówienia();
 
                         break;
                     case "listuj dostawy":
+                        magazyn.listujDostawy();
 
                         break;
                     case "listuj produkty":
-
+                        magazyn.listujProdukty();
                         break;
                     case "zapisz":
-
+                        magazyn.zapiszDoPlikuProduktMap();
+                        magazyn.zapiszDoPlikuZamówieniaMap();
                         break;
                     case "wczytaj":
 

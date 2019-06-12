@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,6 +16,22 @@ public class Zamównienie {
     private int numer;
     private List<Produkt> produktList;
     private LocalDateTime dataZamowienia;
-    private LocalDateTime dataDostarczenia;
+    private LocalDateTime dataDostarczenia = null;
     private String numerFaktury;
+
+    public long czasDostawy(){
+        Duration duration = Duration.between(dataZamowienia,dataDostarczenia);
+        return duration.getSeconds();
+    }
+
+    @Override
+    public String toString() {
+        return "Zamównienie{" +
+                "numer=" + numer +
+                ", produktList=" + produktList +
+                ", dataZamowienia=" + dataZamowienia +
+                ", dataDostarczenia=" + dataDostarczenia +
+                ", numerFaktury='" + numerFaktury + '\'' +
+                '}';
+    }
 }
