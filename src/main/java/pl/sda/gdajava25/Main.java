@@ -58,8 +58,8 @@ public class Main {
                         magazyn.listujProdukty();
                         break;
                     case "zapisz":
-
-
+                        magazyn.zapiszDoPlikuProduktMap();
+                        magazyn.zapiszDoPlikuZamówieniaMap();
                         break;
                     case "wczytaj":
 

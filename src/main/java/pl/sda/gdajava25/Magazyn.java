@@ -78,7 +78,7 @@ public class Magazyn {
 
     public void zapiszDoPlikuProduktMap() {
         Set<String> keySetProdukt = produktMap.keySet();
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter("Produkt_Map.txt", true))) {
+        try (PrintWriter printWriter = new PrintWriter(new FileWriter("Produkt_Map.txt", false))) {
             for(String klucz : keySetProdukt){
               Produkt produkt = produktMap.get(klucz);
               printWriter.println(produkt);
@@ -90,7 +90,7 @@ public class Magazyn {
 
     public void zapiszDoPlikuZamówieniaMap(){
         Set<Integer> keySetZamowienie = zamównienieMap.keySet();
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter("Zamowienia_Map.txt", true))) {
+        try (PrintWriter printWriter = new PrintWriter(new FileWriter("Zamowienia_Map.txt", false))) {
             for(Integer klucz : keySetZamowienie){
                Zamównienie zamównienie = zamównienieMap.get(klucz);
                printWriter.println(zamównienie);

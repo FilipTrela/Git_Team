@@ -26,7 +26,12 @@ public class Zamównienie {
 
     @Override
     public String toString() {
-        return "\n^%^%^%\nNumer=" + numer + "\n DataZamowienia=" + dataZamowienia +
-                "\n DataDostarczenia=" + dataDostarczenia + "\n NumerFaktury=" + numerFaktury;
+        return "Zamównienie{" +
+                "numer=" + numer +
+                ", produktList=" + produktList +
+                ", dataZamowienia=" + dataZamowienia +
+                ", dataDostarczenia=" + dataDostarczenia +
+                ", numerFaktury='" + numerFaktury + '\'' +
+                '}';
     }
 }
