@@ -13,4 +13,10 @@ public class Produkt {
     private int ilosc;
     private boolean  czyDostarczony;
 
+    @Override
+    public String toString() {
+        return "\n#####\nNazwa=" + nazwa + "\n Cena=" + cena +
+                "\n Ilosc=" + ilosc + "\n CzyDostarczony=" + czyDostarczony;
+
+    }
 }

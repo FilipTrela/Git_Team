@@ -21,46 +21,44 @@ public class Main {
             }
 
             try {
-
-
                 switch (komenda) {
                     case "dodaj zamówienie":
-                        Random random = new Random();
                         Zamównienie zamównienie = new Zamównienie();
-                        zamównienie.setDataZamowienia(LocalDateTime.now());
                         List<Produkt> produktList = new ArrayList<>();
                         System.out.println("Podaj ilość produktów na zamównieniu");
                         int iloscProduktów = Integer.parseInt(scanner.nextLine());
                         for (int i = 1; i >= iloscProduktów; i++) {
                             Produkt produkt = new Produkt();
                             produkt.setCzyDostarczony(false);
-                            System.out.println("Podaj nazwe produktu "+i);
+                            System.out.println("Podaj nazwe produktu " + i);
                             produkt.setNazwa(scanner.nextLine());
-                            System.out.println("Podaj cene produktu "+i);
+                            System.out.println("Podaj cene produktu " + i);
                             produkt.setCena(Double.parseDouble(scanner.nextLine()));
-                            System.out.println("Podaj ilość produktu "+i);
+                            System.out.println("Podaj ilość produktu " + i);
                             produkt.setIlosc(Integer.parseInt(scanner.nextLine()));
                             produktList.add(produkt);
-                            magazyn.dodajProdukt(produkt);
                         }
                         zamównienie.setProduktList(produktList);
+                        zamównienie.setDataZamowienia(LocalDateTime.now());
                         int numerZamowienia = magazyn.dodajZamowienie(zamównienie);
-                        System.out.println("Zamówienie złożone. Numer zamówienia : "+numerZamowienia);
-
+                        System.out.println("Zamówienie złożone. Numer zamówienia : " + numerZamowienia);
                         break;
                     case "dodaj dostawę":
 
                         break;
                     case "listuj zamówienia":
+                        magazyn.listujZamówienia();
 
                         break;
                     case "listuj dostawy":
+                        magazyn.listujDostawy();
 
                         break;
                     case "listuj produkty":
-
+                        magazyn.listujProdukty();
                         break;
                     case "zapisz":
+
 
                         break;
                     case "wczytaj":
