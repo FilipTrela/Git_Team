@@ -1,6 +1,7 @@
 package pl.sda.gdajava25;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Main {
@@ -49,15 +50,45 @@ public class Main {
                         Zamównienie zamównienieDostawa=magazyn.getZamównienieMap().get(numerZamowieniaDostawa);
                         System.out.println("Zamówienie zawiera " +zamównienieDostawa.getProduktList().size()+" produkty");
                         for (Produkt produkt: zamównienieDostawa.getProduktList()) {
-                            System.out.println("Czy w dostawie znajduje się produkt: "+produkt.getNazwa()+", cena "
-                            +produkt.getCena()+", ilość "+produkt.getIlosc());
-                            String czyZawiera =scanner.nextLine().toLowerCase();
-                            if(czyZawiera.equals("tak")){
-                                produkt.setCzyDostarczony(true);
+                            if (!produkt.isCzyDostarczony()) {
+                                System.out.println("Czy w dostawie znajduje się produkt: " + produkt.getNazwa() + ", cena "
+                                        + produkt.getCena() + ", ilość " + produkt.getIlosc());
+                                String czyZawiera = scanner.nextLine().toLowerCase();
+                                if (czyZawiera.equals("tak")) {
+                                    produkt.setCzyDostarczony(true);
+                                    magazyn.dodajProdukt(produkt);
+                                } else {
+                                    produkt.setCzyDostarczony(false);
+                                    System.out.println("Oznaczam produkt jako niedostarczony");
+                                }
+                            } else {
+                                System.out.println("Produkt dostarczono wcześniej");
+
                             }
-
-
                         }
+
+                        System.out.println("Zamówienie zostało zrealizowane, podaj numer faktury:");
+                        String numerfaktury = scanner.nextLine();
+                        zamównienieDostawa.setNumerFaktury(numerfaktury);
+                        System.out.println("Faktura dopisana do zamówienia");
+                        System.out.println("Czy chcesz wprowadzić datę zamówinia ręcznie?");
+                        String czyDataRecznie = scanner.nextLine().toLowerCase();
+                        if (czyDataRecznie.equals("tak")){
+                            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                            System.out.println("Podaj datę dostawy (format yyyy-MM-dd HH:mm):");
+                            String dataDostawyString=scanner.nextLine();
+                            dataDostawyString+=":00";
+                            LocalDateTime dataDostawy = LocalDateTime.parse(dataDostawyString, dateTimeFormatter);
+                            zamównienieDostawa.setDataDostarczenia(dataDostawy);
+                        }else{
+                            zamównienieDostawa.setDataDostarczenia(LocalDateTime.now());
+                            System.out.println("Data dostarczenia zaktualizowanę na obecną automatycznie.");
+                        }
+
+                        if(zamównienieDostawa.czasDostawy()>60){
+                            System.out.println("dostawa przypyła ze spóźnieniem");
+                        }
+
 
                         break;
                     case "listuj zamówienia":

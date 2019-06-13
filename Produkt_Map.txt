@@ -1,0 +1,6 @@
+
+#####
+Nazwa=woda
+ Cena=2.0
+ Ilosc=10
+ CzyDostarczony=true

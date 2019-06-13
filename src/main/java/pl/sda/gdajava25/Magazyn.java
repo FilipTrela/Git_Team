@@ -27,6 +27,10 @@ public class Magazyn {
         return numerZamowienia++;
     }
 
+    public void dodajProdukt (Produkt produkt){
+        produktMap.put(produkt.getNazwa(),produkt);
+    }
+
     public Zamównienie pobierzZamowienie(int numerZamowienia) {
         return zamównienieMap.get(numerZamowienia);
     }
