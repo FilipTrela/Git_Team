@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
@@ -43,14 +42,14 @@ public class Magazyn {
             if (zamównienie.getDataDostarczenia() == null) {
                 System.out.println("--------------------------");
                 System.out.println("Zamówienie numer : " + key);
-                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String czas = dateTimeFormatter.format(zamównienie.getDataZamowienia());
-                System.out.println("Data złożenia zamówienia : "+czas);
+                System.out.println("Data złożenia zamówienia : " + czas);
                 List<Produkt> produktList = zamównienie.getProduktList();
-                System.out.println("Ilość zamówionych produktów : "+produktList.size());
+                System.out.println("Ilość zamówionych produktów : " + produktList.size());
                 System.out.print("Zamówione produkty : ");
-                for(Produkt produkt : produktList){
-                    System.out.print(produkt.getNazwa()+",");
+                for (Produkt produkt : produktList) {
+                    System.out.print(produkt.getNazwa() + ",");
                 }
                 System.out.println();
             }
@@ -59,7 +58,7 @@ public class Magazyn {
 
     public void listujDostawy() {
         Set<Integer> keySet = zamównienieMap.keySet();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         System.out.println("Zamówienia zrealizowane : ");
         for (Integer key : keySet) {
             Zamównienie zamównienie = zamównienieMap.get(key);
@@ -78,7 +77,7 @@ public class Magazyn {
                 System.out.println("Ilość produktów dostarczonych : " + iloscProduktowDostarczonych);
                 long czasDostawy = zamównienie.czasDostawy();
                 if (czasDostawy > 60) {
-                    System.out.println("Zamówienie opóźnione o " + (czasDostawy - 60) +" sekund");
+                    System.out.println("Zamówienie opóźnione o " + (czasDostawy - 60) + " sekund");
                 } else {
                     System.out.println("Zamówienie zrealizowane na czas.");
                 }
@@ -87,31 +86,36 @@ public class Magazyn {
 
     }
 
-    public void listujProdukty(){
-       Set<String> keys =  produktMap.keySet();
-       for(String klucz : keys){
-           System.out.println("Produkt "+produktMap.get(klucz).getNazwa()+". Ilość : "+produktMap.get(klucz).getIlosc());
-       }
+    public void listujProdukty() {
+        Set<String> keys = produktMap.keySet();
+        System.out.println("--------------------------");
+        if (keys.size()==0) {
+            System.out.println("Nie ma żadnnych produktów w magazynie.");
+        } else {
+            for (String klucz : keys) {
+                System.out.println("Produkt " + produktMap.get(klucz).getNazwa() + ". Ilość : " + produktMap.get(klucz).getIlosc());
+            }
+        }
     }
 
     public void zapiszDoPlikuProduktMap() {
         Set<String> keySetProdukt = produktMap.keySet();
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter("Produkt_Map.txt", false))) {
-            for(String klucz : keySetProdukt){
-              Produkt produkt = produktMap.get(klucz);
-              printWriter.println(produkt);
+        try (PrintWriter printWriter = new PrintWriter("Produkt_Map.txt")) {
+            for (String klucz : keySetProdukt) {
+                Produkt produkt = produktMap.get(klucz);
+                printWriter.println(produkt);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void zapiszDoPlikuZamówieniaMap(){
+    public void zapiszDoPlikuZamówieniaMap() {
         Set<Integer> keySetZamowienie = zamównienieMap.keySet();
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter("Zamowienia_Map.txt", false))) {
-            for(Integer klucz : keySetZamowienie){
-               Zamównienie zamównienie = zamównienieMap.get(klucz);
-               printWriter.println(zamównienie);
+        try (PrintWriter printWriter = new PrintWriter("Zamowienia_Map.txt")) {
+            for (Integer klucz : keySetZamowienie) {
+                Zamównienie zamównienie = zamównienieMap.get(klucz);
+                printWriter.println(zamównienie);
             }
         } catch (IOException e) {
             e.printStackTrace();

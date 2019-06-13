@@ -26,7 +26,7 @@ public class Zamównienie {
 
     @Override
     public String toString() {
-        return "\n#####\nNumer=" + numer + "\n DataZamówienia=" + dataZamowienia +
+        return "\n*****\nNumer=" + numer + "\n DataZamówienia=" + dataZamowienia +
                 "\n DataDostarczenia=" + dataDostarczenia + "\n NumerFaktury=" + numerFaktury+"\n ProduktList="+produktList;
     }
 }
