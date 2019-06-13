@@ -27,7 +27,7 @@ public class Main {
                         List<Produkt> produktList = new ArrayList<>();
                         System.out.println("Podaj ilość produktów na zamównieniu");
                         int iloscProduktów = Integer.parseInt(scanner.nextLine());
-                        for (int i = 1; i >= iloscProduktów; i++) {
+                        for (int i = 1; i <= iloscProduktów; i++) {
                             Produkt produkt = new Produkt();
                             produkt.setCzyDostarczony(false);
                             System.out.println("Podaj nazwe produktu " + i);
