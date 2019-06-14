@@ -47,6 +47,7 @@ public class Main {
                     case "dodaj dostawę":
                         System.out.println("Podaj numer zamówienia: ");
                         int numerZamowieniaDostawa = scanner.nextInt();
+                        scanner.nextLine();
                         Zamównienie zamównienieDostawa=magazyn.getZamównienieMap().get(numerZamowieniaDostawa);
                         System.out.println("Zamówienie zawiera " +zamównienieDostawa.getProduktList().size()+" produkty");
                         for (Produkt produkt: zamównienieDostawa.getProduktList()) {
@@ -107,6 +108,7 @@ public class Main {
                         magazyn.zapiszDoPlikuZamówieniaMap();
                         break;
                     case "wczytaj":
+                        magazyn.odczytajZPlikuProduktMap();
 
                         break;
                     default:
