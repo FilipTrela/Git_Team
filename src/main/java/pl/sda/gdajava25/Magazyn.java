@@ -4,13 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -24,6 +20,10 @@ public class Magazyn {
     public int dodajZamowienie(Zamównienie zamównienie) {
         zamównienieMap.put(numerZamowienia, zamównienie);
         return numerZamowienia++;
+    }
+
+    public void dodajProdukt (Produkt produkt){
+        produktMap.put(produkt.getNazwa(),produkt);
     }
 
     public Zamównienie pobierzZamowienie(int numerZamowienia) {
@@ -106,6 +106,55 @@ public class Magazyn {
         }
     }
 
+    public void odczytajZPlikuProduktMap(){
+
+        File plik = new File("Produkt_Map.txt");
+        if (plik.exists()) {
+
+            try (Scanner scanner = new Scanner(new FileReader("Produkt_Map.txt"));){
+
+                if (!scanner.hasNextLine()) {
+                    System.out.println("brak treści");
+                }
+                scanner.nextLine();
+
+                while (scanner.hasNextLine()) {
+                    Produkt produkt = new Produkt();
+                    scanner.nextLine();
+
+                    for (int i = 0; i < 4; i++) {
+                        String line = scanner.nextLine();
+                        String[] lineTab = line.split("=");
+                        switch (lineTab[0]) {
+                            case "Nazwa":
+                                produkt.setNazwa((lineTab[1]));
+                                break;
+                            case "Cena":
+                                produkt.setCena(Double.parseDouble(lineTab[1]));
+                                break;
+                            case "Ilosc":
+                                produkt.setIlosc(Integer.parseInt(lineTab[1]));
+                                break;
+                            case "CzyDostarczony":
+                                produkt.setCzyDostarczony(Boolean.parseBoolean(lineTab[1]));
+                                break;
+                            default:
+                                continue;
+                        }
+                    }
+                    this.dodajProdukt(produkt);
+                }
+
+            } catch (FileNotFoundException e) {
+                e.getLocalizedMessage();
+            }
+        } else {
+            System.out.println("brak pliku");
+        }
+
+
+    }
+
     public void zapiszDoPlikuZamówieniaMap() {
         Set<Integer> keySetZamowienie = zamównienieMap.keySet();
         try (PrintWriter printWriter = new PrintWriter("Zamowienia_Map.txt")) {
@@ -118,4 +167,52 @@ public class Magazyn {
         }
 
     }
+
+  /*  public void odczytajZPlikuZamowiniaMap(){
+
+        File plik = new File("Zamowienia_Map.txt");
+        if (plik.exists()) {
+
+            try (Scanner scanner = new Scanner(new FileReader("Zamowienia_Map.txt"));){
+
+                if (!scanner.hasNextLine()) {
+                    System.out.println("brak treści");
+                }
+
+                while (scanner.hasNextLine()) {
+                    Produkt produkt = new Produkt();
+                    scanner.nextLine();
+
+                    for (int i = 0; i < 4; i++) {
+                        String line = scanner.nextLine();
+                        String[] lineTab = line.split("=");
+                        switch (lineTab[0]) {
+                            case "Nazwa":
+                                produkt.setNazwa((lineTab[1]));
+                                break;
+                            case "Cena":
+                                produkt.setCena(Double.parseDouble(lineTab[1]));
+                                break;
+                            case "Ilosc":
+                                produkt.setIlosc(Integer.parseInt(lineTab[1]));
+                                break;
+                            case "CzyDostarczony":
+                                produkt.setCzyDostarczony(Boolean.parseBoolean(lineTab[1]));
+                                break;
+                            default:
+                                continue;
+                        }
+                    }
+                    this.dodajProdukt(produkt);
+                }
+
+            } catch (FileNotFoundException e) {
+                e.getLocalizedMessage();
+            }
+        } else {
+            System.out.println("brak pliku");
+        }
+
+
+    }*/
 }

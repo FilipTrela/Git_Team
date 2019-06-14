@@ -1,0 +1,17 @@
+
+*****
+Numer=0
+ DataZamówienia=2019-06-14T12:14:40.228
+ DataDostarczenia=2019-06-14T12:15:48.885
+ NumerFaktury=213
+ ProduktList=[
+#####
+Nazwa=mleko
+ Cena=3.5
+ Ilosc=6
+ CzyDostarczony=false, 
+#####
+Nazwa=woda
+ Cena=2.0
+ Ilosc=9
+ CzyDostarczony=true]
